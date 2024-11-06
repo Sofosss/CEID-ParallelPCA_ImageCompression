@@ -1,6 +1,10 @@
 <h1 align="center">
+<br>
+<img src="./media/logo.png" alt="logo" style="width:200px;margin-bottom:0.3vh">
+<br>
 <strong>Image Compression: A PCA-based approach enhanced by parallel processing</strong>
 </h1>
+
 
 
 <h4 align="center">
@@ -19,6 +23,7 @@
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Demo](#demo)
 * [Tests](#tests)
 * [Contact](#contact)
 * [License](#license)
@@ -30,14 +35,14 @@ In this project we implement the standard Covariance method for the PCA procedur
 ## Key Features
 - Current version supports only loading images stored as binary gzipped files.
 - Converting and storing compressed images as binary, PNG, JPEG or gzip.
-- Fully functional PCA algorithm for grayscale and RGB images.
+- **Fully functional** PCA algorithm for grayscale and RGB images.
 - The primary procedure focuses on computing the eigenvalues of the covariance matrix, as detailed [here][method-link].
-- Implemented flattened storage of input image to align with cache line.
-- Parallel multithreaded version of fit and transform of input image (Z-normalization).
-- Parallel multithreaded and vectorized computation of the covariance matrix.
+- Implemented flattened storage of input image to **align with cache line**.
+- **Parallel multithreaded** version of fit and transform of input image (Z-normalization).
+- **Parallel multithreaded** and vectorized computation of the covariance matrix.
 - Lapacke computation of eigenvectors with [dsyev()][dsyev-link].
-- Parallel projection via matrix multiplication (utilizing CBlas [dgemm()][dgemm-link] for grayscale images). For the RGB case we parallelize the matrix multiplication using OpenMP.
-- Implemented parallelized inverse PCA procedure (decompression), enabling efficient reconstruction of original image data.
+- **Parallel projection** via matrix multiplication (utilizing CBlas [dgemm()][dgemm-link] for grayscale images). For the RGB case we **parallelize the matrix multiplication using OpenMP**.
+- Implemented **parallelized inverse PCA procedure (decompression)**, enabling efficient reconstruction of original image data.
 
 >[!NOTE]
 > `dsyev()` operates sequentially, which may lead to significant overhead, epsecially when processing larger images.
@@ -49,8 +54,8 @@ In this project we implement the standard Covariance method for the PCA procedur
 
 ## Prerequisites
 - Docker
-- Python => 3.10.*
-- A list of Python libraries listed [here][requirements-link]
+- Python: 3.10.*
+- A list of Python libraries available in the requirements file [here][requirements-link]
 
 ## Installation
 We provide a custom [Dockerfile][dockerfile-link] that manages all required dependencies, including GCC, OpenBlas and Lapacke.
@@ -87,6 +92,11 @@ auto decompressedImg = pca.inversePCA(compressedImg);
 decompressedImg.saveImg("path/to/decompressedImg.png", ImageFormat::PNG);
 ```
 
+## Demo
+Below, a short demo video is provided to illustrate the functionality and usage of the project. The process starts by loading the input image from [lena_hd.bin.gz][lena-hd] (812x1200), which is then saved as a PNG file. The image undergoes compression using our parallel PCA implementation, retaining **80** principal components. Afterward, the image is reconstructed via inverse PCA. Finally, both the original and decompressed images are displayed side by side for a quick visual comparison.
+
+![](./media/demo.gif)
+
 
 ## Tests
 Some initial tests have been implemented using the Pytest library; however, the current test coverage remains suboptimal. 
@@ -122,3 +132,4 @@ Distributed under the [MIT] License. See `LICENSE.md` for more details.
 [method-link]: https://visualstudiomagazine.com/Articles/2024/01/17/principal-component-analysis.aspx
 [dsyev-link]: https://netlib.org/lapack/explore-html-3.6.1/d2/d8a/group__double_s_yeigen_ga442c43fca5493590f8f26cf42fed4044.html
 [dgemm-link]: https://www.netlib.org/lapack/explore-html/dd/d09/group__gemm_ga1e899f8453bcbfde78e91a86a2dab984.html#ga1e899f8453bcbfde78e91a86a2dab984
+[lena-hd]: https://github.com/Sofosss/CEID-ParallelPCA_ImageCompression/blob/main/data/lena_hd.bin.gz
