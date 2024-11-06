@@ -93,7 +93,7 @@ decompressedImg.saveImg("path/to/decompressedImg.png", ImageFormat::PNG);
 ```
 
 ## Demo
-Below, a short demo video is provided to illustrate the functionality and usage of the project. The process starts by loading the input image from [lena_hd.bin.gz][lena-hd] (812x1200), which is then saved as a PNG file. The image undergoes compression using our parallel PCA implementation, retaining **80** principal components. Afterward, the image is reconstructed via inverse PCA. Finally, both the original and decompressed images are displayed side by side for a quick visual comparison.
+Below, a short demo video is provided to illustrate the functionality and usage of the project. The process starts by loading the input image from [lena_hd.bin.gz][lena-hd] (822x1200), which is then saved as a PNG file. The image undergoes compression using our parallel PCA implementation, retaining **80** principal components. Afterward, the image is reconstructed via inverse PCA. Finally, both the original and decompressed images are displayed side by side for a quick visual comparison.
 
 ![](./media/demo.gif)
 

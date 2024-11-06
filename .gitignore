@@ -1,6 +1,5 @@
 mtx.*
 *threads*
-*demo*
 .vscode/*
 venv/*
 *.o

@@ -427,15 +427,20 @@ template<typename T>
 void ImgMatrix<T>::saveAsImg(std::string_view filename, ImageFormat fmt) {
     auto [rows, columns, channels] = shape_;
   
-
-    switch (channels){
-        case static_cast<uint8_t>(1):{
-            cv::Mat image_Gray {rows, columns, CV_64FC1, imgData_.data()};
+    switch (channels) {
+        case 1: { 
+            cv::Mat image_Gray(rows, columns, CV_64FC1, imgData_.data());
+            if (image_Gray.depth() != CV_8U) {
+                image_Gray.convertTo(image_Gray, CV_8U);
+            }
             writeImg(filename, fmt, image_Gray);
             break;
         }
-        case static_cast<uint8_t>(3): {
-            cv::Mat image_BGR {toBGR()};
+        case 3: { 
+            cv::Mat image_BGR = toBGR();
+            if (image_BGR.depth() != CV_8U) {
+                image_BGR.convertTo(image_BGR, CV_8U);
+            }
             writeImg(filename, fmt, image_BGR);
             break;
         }

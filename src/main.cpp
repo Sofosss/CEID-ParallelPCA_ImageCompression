@@ -15,13 +15,14 @@ constexpr const std::string_view results_path = "/opt/ImgCompression/results/";
 
 int main() {
     
-   
-    ImgMatrix<uint8_t> img{"/data/lena_hd.bin.gz", 822, 1200, static_cast<uint8_t>(3), Order::ROW_MAJOR}; 
+    uint16_t rows = 822; uint16_t columns = 1200; uint8_t channels = 3;
+    ImgMatrix<uint8_t> img{"/data/lena_hd.bin.gz", rows, columns, channels, Order::ROW_MAJOR}; 
     img.saveImg(std::string{results_path} + std::string{"lena_hd.png"}, ImageFormat::PNG);
     
 
     PCA<uint8_t> pca;
-    auto compressedImg = pca.performPCA(img, 100);
+    uint16_t n_components = 80;
+    auto compressedImg = pca.performPCA(img, n_components);
     // std::cout << "Cache line size:" << sysconf (_SC_LEVEL1_DCACHE_LINESIZE) << std::endl;
     // compressedImg.saveImg("compressed_image.bin", ImageFormat::BIN);
     auto decompressedImg = pca.inversePCA(compressedImg);
